@@ -2,6 +2,9 @@ import React, {useState, useEffect} from "react";
 import { Table, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/fontawesome-free-solid";
+import { revertDate } from '../../utils/utils';
+
+import './style.css';
 
 import api from '../../services/api';
 
@@ -23,7 +26,7 @@ const TableInfo = (props) => {
   return (
     <Table responsive striped bordered hover size="sm" variant="light">
       <thead>
-        <tr>
+        <tr className='text-center'>
           <th>Data Realizada</th>
           <th>Registro</th>
           <th>Categoria</th>
@@ -35,9 +38,11 @@ const TableInfo = (props) => {
       </thead>
       <tbody>
         {financial.map(element => {
-          return <tr key={element.id}>
-            <td>{element.date}</td>
-            <td>{element.register_type}</td>
+          return <tr key={element.id} className='text-center'>
+            <td>{revertDate(element.date)}</td>
+            <td className={element.register_type === "Receita" ? 'receita-text' : 'despesa-text'}>
+              {element.register_type}
+            </td>
             <td>{element.category}</td>
             <td>{element.description}</td>
             <td>R$ {element.expense}</td>

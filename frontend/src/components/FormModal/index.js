@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button, Col, Row, Form } from "react-bootstrap";
-import {TIPOREGISTRO, TIPOCATEGORIA, TIPOPAGAMENTO} from './utils';
+import {TIPOREGISTRO, TIPOCATEGORIA, TIPOPAGAMENTO} from '../../utils/utils';
 
 const FormModal = (props) => {
   return (
