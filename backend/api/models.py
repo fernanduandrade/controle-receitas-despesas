@@ -10,4 +10,4 @@ class Budge(models.Model):
     category = models.CharField(max_length=25)
     description = models.CharField(max_length=60)
     expense_type = models.CharField(max_length=20)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()

@@ -14,7 +14,7 @@ const Header = (props) => {
         <Card 
             border="secondary" 
             className="mx-auto my-2" 
-            style={{ width: '17rem', borderRadius: '10px'}}
+            style={{ width: '19rem', borderRadius: '10px'}}
         >
           <Card.Body >
             <Row>
@@ -34,7 +34,7 @@ const Header = (props) => {
         <Card 
             border="secondary" 
             className="mx-auto my-2" 
-            style={{ width: '17rem', borderRadius: '10px'}}
+            style={{ width: '19rem', borderRadius: '10px'}}
         >
           <Card.Body>
             <Row>
@@ -57,7 +57,7 @@ const Header = (props) => {
         <Card 
             border="secondary" 
             className="mx-auto my-2 card-container" 
-            style={{ width: '17rem', borderRadius: '10px'}}
+            style={{ width: '19rem', borderRadius: '10px'}}
         >
           <Card.Body>
             <Row>
