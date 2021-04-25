@@ -1,8 +1,8 @@
 from rest_framework import routers
-from .views import BudgeViewSet
+from .views import BudgetViewSet
 
 
 router = routers.DefaultRouter()
-router.register('budge', BudgeViewSet)
+router.register('budget', BudgetViewSet)
 
 urlpatterns = router.urls

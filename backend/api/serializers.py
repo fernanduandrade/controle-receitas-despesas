@@ -1,9 +1,9 @@
-from .models import Budge
+from .models import Budget
 from rest_framework import serializers
 
 
-class BudgeSerializer(serializers.ModelSerializer):
+class BudgetSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Budge
+        model = Budget
         fields = '__all__'

@@ -1,7 +1,25 @@
-import React from "react";
-import { Table } from "react-bootstrap";
+import React, {useState, useEffect} from "react";
+import { Table, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/fontawesome-free-solid";
+
+import api from '../../services/api';
 
 const TableInfo = (props) => {
+  const [financial, setFinancial] = useState([]);
+
+  useEffect(() => {
+    async function loadInfo() {
+      try {
+        const response = await api.get();
+        setFinancial(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadInfo();
+  }, []);
   return (
     <Table responsive striped bordered hover size="sm" variant="light">
       <thead>
@@ -16,14 +34,19 @@ const TableInfo = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{props.data}</td>
-          <td>{props.registro}</td>
-          <td>{props.categoria}</td>
-          <td>{props.descricao}</td>
-          <td>{props.valor}</td>
-          <td>{props.formato}</td>
-        </tr>
+        {financial.map(element => {
+          return <tr key={element.id}>
+            <td>{element.date}</td>
+            <td>{element.register_type}</td>
+            <td>{element.category}</td>
+            <td>{element.description}</td>
+            <td>R$ {element.expense}</td>
+            <td>{element.expense_type}</td>
+            <td>
+              <Button variant="primary-outline"><FontAwesomeIcon icon={faTrash} color="#C43E36"/></Button>
+            </td>
+          </tr>
+      })}
       </tbody>
     </Table>
   );
