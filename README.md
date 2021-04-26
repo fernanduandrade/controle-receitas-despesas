@@ -85,11 +85,11 @@ Você pode visualizar a documentação da API através `localhost:8000/swagger/`
 Os endpoints da API são:
 |Rotas| Método | Descrição |
 |---|---|---|
-|`localhost:8000/api/budget`| `GET` | Retorna todos atletas registrados. |
-|`localhost:8000/api/budget/:id`| `GET` | Retorna apenas um atleta. |
-|`localhost:8000/api/budget`| `POST` | Cadastra um novo atleta. |
-|`localhost:8000/api/budget/:id`| `PUT` | Atualiza os dados de um atleta específico. |
-|`localhost:8000/api/budget/:id`| `DELETE` | Deletar um atleta específico. |
+|`localhost:8000/api/budget`| `GET` | Retorna todos registros. |
+|`localhost:8000/api/budget/:id`| `GET` | Retorna apenas um registro. |
+|`localhost:8000/api/budget`| `POST` | Cadastra um novo registro. |
+|`localhost:8000/api/budget/:id`| `PUT` | Atualiza os dados de um registro específico. |
+|`localhost:8000/api/budget/:id`| `DELETE` | Deletar um registro específico. |
 
 + Exemplo da Resquest/POST (application/json)
     + Body 
