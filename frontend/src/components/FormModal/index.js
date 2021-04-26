@@ -1,8 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Col, Row, Form } from "react-bootstrap";
-import {TIPOREGISTRO, TIPOCATEGORIA, TIPOPAGAMENTO} from '../../utils/utils';
+import { TIPOREGISTRO, TIPOCATEGORIA, TIPOPAGAMENTO } from "../../utils/choices";
+import api from "../../services/api";
+
 
 const FormModal = (props) => {
+
+  const [financial, setFinancial] = useState([]);
+
+  useEffect(() => {
+    async function loadInfo() {
+      try {
+        const response = await api.get('budget/');
+        setFinancial(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadInfo();
+  }, []);
+
+  const [date, setDate] = useState("");
+  const [register_type, setRegisterType] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [expense, setExpense] = useState("");
+  const [expense_type, setExpenseType] = useState("");
+
+  async function handleCreateResgiter(e) {
+    e.preventDefault();
+
+    
+
+    const newData = {
+      date,
+      register_type,
+      category,
+      description,
+      expense,
+      expense_type,
+    };
+
+    const updatedData = {...financial, newData};
+
+    try {
+      await api
+        .post('budget/', newData)
+          .then((response) => {
+            if(response.status === 201) setFinancial(updatedData)
+            // setTimeout(() => {
+            //   props.fecharModal();
+            // }, 3000)
+            
+          });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Modal
       backdrop="static"
@@ -15,13 +71,18 @@ const FormModal = (props) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleCreateResgiter}>
           <Form.Group controlId="formData">
             <Form.Label column sm="2">
               Dia
             </Form.Label>
             <Col sm="11">
-              <Form.Control type="date" />
+              <Form.Control
+                required
+                name="date"
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+              />
             </Col>
           </Form.Group>
 
@@ -32,8 +93,16 @@ const FormModal = (props) => {
                   Registro
                 </Form.Label>
                 <Col>
-                  <Form.Control as="select">
-                  {TIPOREGISTRO.map((option, index) => <option key={index}>{option}</option>)}
+                  <Form.Control
+                    required
+                    name="register_type"
+                    as="select"
+                    onChange={(e) => setRegisterType(e.target.value)}
+                  >
+                    <option>Tipo de Registro</option>
+                    {TIPOREGISTRO.map((option, index) => (
+                      <option key={index}>{option}</option>
+                    ))}
                   </Form.Control>
                 </Col>
               </Form.Group>
@@ -45,8 +114,16 @@ const FormModal = (props) => {
                   Categoria
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control as="select">
-                    {TIPOCATEGORIA.map((option, index) => <option key={index}>{option}</option>)}  
+                  <Form.Control
+                    required
+                    name="category"
+                    as="select"
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option>Tipo de Categoria</option>
+                    {TIPOCATEGORIA.map((option, index) => (
+                      <option key={index}>{option}</option>
+                    ))}
                   </Form.Control>
                 </Col>
               </Form.Group>
@@ -54,34 +131,57 @@ const FormModal = (props) => {
           </Row>
 
           <Form.Group controlId="form">
-                <Form.Label column sm="2">
-                  Descrição
-                </Form.Label>
-                <Col sm="11">
-                  <Form.Control type="text" placeholder="Descrição do que foi feito" />
-                </Col>
-              </Form.Group>
-            
-              <Form.Group controlId="form">
-                <Form.Label column sm="2">
-                  Valor
-                </Form.Label>
-                <Col sm="11">
-                  <Form.Control type="number" placeholder="Valor" />
-                </Col>
-              </Form.Group>
+            <Form.Label column sm="2">
+              Descrição
+            </Form.Label>
+            <Col sm="11">
+              <Form.Control
+                required
+                name="description"
+                type="text"
+                placeholder="Descrição do que foi feito"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Col>
+          </Form.Group>
 
-              <Form.Group controlId="form">
-                
-                <Form.Label column sm="2">
-                  Formato
-                </Form.Label>
-                <Col sm="11">
-                  <Form.Control as="select">
-                    {TIPOPAGAMENTO.map((option, index) => <option key={index}>{option}</option>)} 
-                  </Form.Control>
-                </Col>
-              </Form.Group>
+          <Form.Group controlId="form">
+            <Form.Label column sm="2">
+              Valor
+            </Form.Label>
+            <Col sm="11">
+              <Form.Control
+                required
+                name="expense"
+                type="number"
+                placeholder="Valor"
+                onChange={(e) => {
+                  register_type === "Despesa"
+                    ? setExpense(-e.target.value)
+                    : setExpense(e.target.value);
+                }}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group controlId="form">
+            <Form.Label column sm="2">
+              Formato
+            </Form.Label>
+            <Col sm="11">
+              <Form.Control
+                required
+                name="expense_type"
+                as="select"
+                onChange={(e) => setExpenseType(e.target.value)}
+              >
+                <option>Forma de Gasto</option>
+                {TIPOPAGAMENTO.map((option, index) => (
+                  <option key={index}>{option}</option>
+                ))}
+              </Form.Control>
+            </Col>
+          </Form.Group>
         </Form>
       </Modal.Body>
 
@@ -89,7 +189,7 @@ const FormModal = (props) => {
         <Button variant="secondary" onClick={props.fecharModal}>
           FECHAR
         </Button>
-        <Button variant="primary" onClick={props.fecharModal}>
+        <Button variant="primary" onClick={handleCreateResgiter}>
           ADICIONAR
         </Button>
       </Modal.Footer>

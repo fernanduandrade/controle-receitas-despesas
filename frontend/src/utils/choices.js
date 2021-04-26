@@ -1,8 +1,7 @@
-export const revertDate = (str) => str.split("-").reverse().join("/");
-
 export const TIPOREGISTRO = ["Despesa", "Receita"];
 
 export const TIPOCATEGORIA = [
+  "Salário Mensal",
   "Alimentação",
   "Casa",
   "Diversão",
@@ -17,8 +16,6 @@ export const TIPOPAGAMENTO = [
   "Cartão de Débito",
   "Cartão de Crédito",
   "Cheque",
-  "Depósito",
-  "Dinheiro",
   "Transferência",
   "Pix",
 ];

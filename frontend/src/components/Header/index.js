@@ -2,7 +2,7 @@ import React, {useState, useEffect, useMemo } from "react";
 import { Col, Row, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp, faArrowCircleDown, faDonate } from "@fortawesome/fontawesome-free-solid";
-import { HandleBalanceValues } from '../../utils/utils';
+import formartValue from '../../utils/formatValue';
 
 import './style.css';
 
@@ -14,7 +14,7 @@ const Header = () => {
   useEffect(() => {
     async function loadInfo() {
       try {
-        const response = await api.get();
+        const response = await api.get('budget');
         setFinancial(response.data);
       } catch (error) {
         console.log(error);
@@ -72,7 +72,7 @@ const Header = () => {
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Saldo </Card.Title>
-                <Card.Text className="card-text">R$ {saldo}</Card.Text>
+                <Card.Text className="card-text">{formartValue(saldo)}</Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon icon={faDonate} color="#18A0FB" size="5x" />
@@ -92,7 +92,7 @@ const Header = () => {
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Receitas </Card.Title>
-                <Card.Text className="card-text">R$ {saldoReceita}</Card.Text>
+                <Card.Text className="card-text">{formartValue(saldoReceita)}</Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon
@@ -115,7 +115,7 @@ const Header = () => {
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Despesas </Card.Title>
-                <Card.Text className="card-text">R$ {saldoDespesa}</Card.Text>
+                <Card.Text className="card-text">{formartValue(saldoDespesa)}</Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon
