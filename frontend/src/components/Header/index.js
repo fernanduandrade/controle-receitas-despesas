@@ -1,78 +1,53 @@
-import React, {useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleUp, faArrowCircleDown, faDonate } from "@fortawesome/fontawesome-free-solid";
-import formartValue from '../../utils/formatValue';
+import {
+  faArrowCircleUp,
+  faArrowCircleDown,
+  faDonate,
+} from "@fortawesome/fontawesome-free-solid";
+import formartValue from "../../utils/formatValue";
+import HandleBalanceValues from "../../utils/HandleBalanceValues";
 
-import './style.css';
+import "./style.css";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
 const Header = () => {
-  const [financial, setFinancial] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     async function loadInfo() {
       try {
-        const response = await api.get('budget');
-        setFinancial(response.data);
+        const response = await api.get("budget");
+        setData(response.data);
       } catch (error) {
         console.log(error);
       }
     }
 
     loadInfo();
-  }, []);
+  }, [data]);
 
-  const saldo = useMemo(() => {
-    const saldoQuantidade = financial.reduce((acc, element) => {
-        const valorTotal = acc + element.expense;
-  
-        return valorTotal;
-    }, 0);
-  
-    return saldoQuantidade
-  
-  }, [financial]);
-  
- 
-  const saldoReceita = useMemo(() => {
-    const receitas = financial.filter(element => element.register_type === 'Receita');
-    const receitasTotal = receitas.reduce((acc, element) => {
-      const total = acc + element.expense;
-
-      return total;
-    }, 0);
-   
-    return receitasTotal;
-  
-  }, [financial]);
-
-  const saldoDespesa = useMemo(() => {
-    const receitas = financial.filter(element => element.register_type === 'Despesa');
-    const receitasTotal = receitas.reduce((acc, element) => {
-      const total = acc + element.expense;
-
-      return total;
-    }, 0);
-   
-    return receitasTotal;
-  
-  }, [financial]);
+  const balance = HandleBalanceValues(data);
+  const balanceIncome = HandleBalanceValues(data, "Receita");
+  const balanceExpense = HandleBalanceValues(data, "Despesa");
 
   return (
     <Row>
       <Col>
-        <Card 
-            border="secondary" 
-            className="mx-auto my-2" 
-            style={{ width: '21rem', borderRadius: '10px'}}
+        <Card
+          className="mx-auto my-2"
+          bsPrefix="card-style"
+          style={{ boxShadow: "0 8px 6px -6px #18A0FB" }}
         >
-          <Card.Body >
+          <Card.Body>
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Saldo </Card.Title>
-                <Card.Text className="card-text">{formartValue(saldo)}</Card.Text>
+                <Card.Text className="card-text">
+                  {formartValue(balance)}
+                </Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon icon={faDonate} color="#18A0FB" size="5x" />
@@ -83,16 +58,18 @@ const Header = () => {
       </Col>
 
       <Col>
-        <Card 
-            border="secondary" 
-            className="mx-auto my-2" 
-            style={{ width: '21rem', borderRadius: '10px'}}
+        <Card
+          className="mx-auto my-2"
+          bsPrefix="card-style"
+          style={{ boxShadow: "0 8px 6px -6px #66AB5C" }}
         >
           <Card.Body>
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Receitas </Card.Title>
-                <Card.Text className="card-text">{formartValue(saldoReceita)}</Card.Text>
+                <Card.Text className="card-text">
+                  {formartValue(balanceIncome)}
+                </Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon
@@ -106,16 +83,18 @@ const Header = () => {
         </Card>
       </Col>
       <Col>
-        <Card 
-            border="secondary" 
-            className="mx-auto my-2 card-container" 
-            style={{ width: '21rem', borderRadius: '10px'}}
+        <Card
+          className="mx-auto my-2"
+          bsPrefix="card-style"
+          style={{ boxShadow: "0 8px 6px -6px #C43E36" }}
         >
           <Card.Body>
             <Row>
               <Col>
                 <Card.Title className="mb-2 text-muted">Despesas </Card.Title>
-                <Card.Text className="card-text">{formartValue(saldoDespesa)}</Card.Text>
+                <Card.Text className="card-text">
+                  {formartValue(balanceExpense)}
+                </Card.Text>
               </Col>
               <Col>
                 <FontAwesomeIcon

@@ -3,3 +3,13 @@
     font-size: 18px;
     color: #333333;
 }
+
+.card-style {
+    background-color: white;
+    width: 21rem;
+    border-radius: 10px;
+}
+.card-style:hover {
+	transform: scale(1.1);
+}
+
