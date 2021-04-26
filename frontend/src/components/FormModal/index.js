@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, Button, Col, Row, Form } from "react-bootstrap";
-import { TIPOREGISTRO, TIPOCATEGORIA, TIPOPAGAMENTO } from "../../utils/choices";
+import { toast, ToastContainer } from 'react-toastify';
+import {
+  TIPOREGISTRO,
+  TIPOCATEGORIA,
+  TIPOPAGAMENTO,
+} from "../../utils/choices";
 import api from "../../services/api";
 
-
 const FormModal = (props) => {
-
-  const [financial, setFinancial] = useState([]);
-
-  useEffect(() => {
-    async function loadInfo() {
-      try {
-        const response = await api.get('budget/');
-        setFinancial(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    loadInfo();
-  }, []);
 
   const [date, setDate] = useState("");
   const [register_type, setRegisterType] = useState("");
@@ -31,8 +20,6 @@ const FormModal = (props) => {
   async function handleCreateResgiter(e) {
     e.preventDefault();
 
-    
-
     const newData = {
       date,
       register_type,
@@ -42,18 +29,13 @@ const FormModal = (props) => {
       expense_type,
     };
 
-    const updatedData = {...financial, newData};
-
     try {
-      await api
-        .post('budget/', newData)
-          .then((response) => {
-            if(response.status === 201) setFinancial(updatedData)
-            // setTimeout(() => {
-            //   props.fecharModal();
-            // }, 3000)
-            
-          });
+      await api.post("budget/", newData).then((response) => {
+        if (response.status === 201) {
+          toast.success('Registro adicionado!');
+          props.fecharModal();
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -193,6 +175,7 @@ const FormModal = (props) => {
           ADICIONAR
         </Button>
       </Modal.Footer>
+      <ToastContainer />
     </Modal>
   );
 };
