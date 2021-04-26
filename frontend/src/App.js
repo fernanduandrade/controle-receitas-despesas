@@ -17,7 +17,12 @@ function App() {
         <Header />
 
         <Button
-          className="modal-button"
+          className="buttons"
+          variant="danger"
+          href="accounts/logout"
+        >SAIR</Button>
+        <Button
+          className="buttons"
           variant="primary"
           onClick={handleFormModal}
         >
