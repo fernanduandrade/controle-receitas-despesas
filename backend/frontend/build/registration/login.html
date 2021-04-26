@@ -1,0 +1,36 @@
+<style>
+    html {
+        background-color: #0c0909f6;
+    }
+    .message {
+        color: #ffffff;
+    }
+</style>
+
+{% if form.errors %}
+<p>Seu nome ou senha não estão corretos. Tente novamente</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Sua conta não tem acesso a essa página.</p>
+{% else %}
+<p class="message">Entre para ver essa página.</p>
+{% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table>
+<tr>
+<td class="message">{{ form.username.label_tag }}</td>
+<td>{{ form.username }}</td>
+</tr>
+<tr>
+<td class="message">{{ form.password.label_tag }}</td>
+<td>{{ form.password }}</td>
+</tr>
+</table>
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
