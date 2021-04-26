@@ -8,6 +8,9 @@ import formartDate from "../../utils/formatDate";
 import "./style.css";
 
 const TableInfo = () => {
+
+  api.defaults.xsrfCookieName = "csrftoken";
+  api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
   const [data, setData] = useState([]);
 
   const deleteRegister = (id) => {

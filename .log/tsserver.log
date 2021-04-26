@@ -1,0 +1,8 @@
+Info 0    [15:23:37.479] Starting TS Server
+Info 1    [15:23:37.480] Version: 4.2.4
+Info 2    [15:23:37.480] Arguments: /usr/bin/node /home/fernando/.emacs.d/.cache/lsp/npm/typescript/bin/tsserver --logFile /home/fernando/Desktop/teste-django-react/.log/tsserver.log --logVerbosity info --cancellationPipeName /tmp/eacff330fdb2fd13b11d616e3d24a4dd/tscancellation*
+Info 3    [15:23:37.480] Platform: linux NodeVersion: 14 CaseSensitive: true
+Info 4    [15:23:37.480] ServerMode: undefined syntaxOnly: false hasUnknownServerMode: undefined
+Info 5    [15:23:37.546] Search path: /home/fernando/Desktop/teste-django-react/frontend/src/components/TableInfo
+Info 6    [15:23:37.549] For info: /home/fernando/Desktop/teste-django-react/frontend/src/components/TableInfo/index.js :: No config files found.
+Info 7    [15:23:37.557] Starting updateGraphWorker: Project: /dev/null/inferredProject1*

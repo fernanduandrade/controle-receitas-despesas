@@ -14,6 +14,9 @@ import "./style.css";
 import api from "../../services/api";
 
 const Header = () => {
+
+  api.defaults.xsrfCookieName = "csrftoken";
+  api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
   const [data, setData] = useState([]);
 
   useEffect(() => {
