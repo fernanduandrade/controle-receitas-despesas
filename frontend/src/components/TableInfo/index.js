@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext} from "react";
 import { Table, Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import api from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/fontawesome-free-solid";
+import DataContext from '../../context/DataContext';
 import formartDate from "../../utils/formatDate";
 import "./style.css";
 
 const TableInfo = () => {
 
-  api.defaults.xsrfCookieName = "csrftoken";
-  api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-  const [data, setData] = useState([]);
+  const {registers, setRegisters} = useContext(DataContext);
 
   const deleteRegister = (id) => {
     try {
       api.delete(`budget/${id}/`).then((response) => {
+        const deleteRegister = registers.filter((register) => {
+          return id !== register.id;
+        });
+
+        setRegisters(deleteRegister);
+
         if (response.status === 204) {
           toast.info("Registro deletado.");
         }
@@ -24,19 +29,7 @@ const TableInfo = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    async function loadInfo() {
-      try {
-        const response = await api.get("budget/");
-        setData(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    loadInfo();
-  }, [data]);
-
+ 
   return (
     <Table
       responsive
@@ -59,8 +52,8 @@ const TableInfo = () => {
         </tr>
       </thead>
       <tbody>
-        {data.length > 0 ? (
-          data
+        {registers.length > 0 ? (
+          registers
             .sort((date1, date2) => date2.id - date1.id)
             .map((element) => {
               const {
@@ -81,9 +74,7 @@ const TableInfo = () => {
                         ? "receita-text"
                         : "despesa-text"
                     }
-                  >
-                    {register_type}
-                  </td>
+                  >{register_type}</td>
                   <td>{category}</td>
                   <td>{description}</td>
                   <td>

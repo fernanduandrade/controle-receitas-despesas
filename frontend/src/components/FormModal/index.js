@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Modal, Button, Col, Row, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import {
@@ -6,9 +6,13 @@ import {
   TIPOCATEGORIA,
   TIPOPAGAMENTO,
 } from "../../utils/choices";
+import DataContext from '../../context/DataContext';
 import api from "../../services/api";
 
 const FormModal = (props) => {
+
+  const {registers, setRegisters} = useContext(DataContext);
+
   const [date, setDate] = useState("");
   const [register_type, setRegisterType] = useState("");
   const [category, setCategory] = useState("");
@@ -29,12 +33,13 @@ const FormModal = (props) => {
     };
 
     try {
-      await api.post("budget/", newData).then((response) => {
-        if (response.status === 201) {
+        const {status, data} = await api.post("budget/", newData)
+        
+        if (status === 201) {
+          setRegisters([...registers, data]);
           toast.success("Registro adicionado!");
           props.fecharModal();
         }
-      });
     } catch (error) {
       console.log(error);
     }

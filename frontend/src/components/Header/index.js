@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Col, Row, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,33 +8,16 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import formartValue from "../../utils/formatValue";
 import HandleBalanceValues from "../../utils/HandleBalanceValues";
-
+import DataContext from '../../context/DataContext';
 import "./style.css";
-
-import api from "../../services/api";
 
 const Header = () => {
 
-  api.defaults.xsrfCookieName = "csrftoken";
-  api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-  const [data, setData] = useState([]);
+  const { registers } = useContext(DataContext);
 
-  useEffect(() => {
-    async function loadInfo() {
-      try {
-        const response = await api.get("budget");
-        setData(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    loadInfo();
-  }, [data]);
-
-  const balance = HandleBalanceValues(data);
-  const balanceIncome = HandleBalanceValues(data, "Receita");
-  const balanceExpense = HandleBalanceValues(data, "Despesa");
+  const balance = HandleBalanceValues(registers);
+  const balanceIncome = HandleBalanceValues(registers, "Receita");
+  const balanceExpense = HandleBalanceValues(registers, "Despesa");
 
   return (
     <Row>

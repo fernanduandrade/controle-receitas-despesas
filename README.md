@@ -52,7 +52,7 @@ nele contém todos os packages incluidos necessários para rodar localmente e pr
 (nome_da_virtualenv)pip install -r requirements.txt
 ```
 
-**Realize o migrate para que o banco de dados crie a tablea**
+**Realize o migrate para que o banco de dados crie a tabela**
 
 ```sh
 (nome_da_virtualenv) python manage.py migrate
@@ -76,11 +76,9 @@ npm run build
 
 **Próximo Passo**
 
-Pegue todos os arquivos gerados dentro da pasta build e retorne para a pasta backend, lá há uma pasta chamada `frontend/build`, ela é responsável por renderizar os templates, cole todos os arquivos gerados nela.
+Pegue todos os arquivos gerados dentro da pasta `build` e retorne para a pasta backend, lá há uma pasta chamada `frontend/build`, ela é responsável por renderizar os templates, cole todos os arquivos gerados nela.
 
 ## Back-end da API
-
-Você pode visualizar a documentação da API através `localhost:8000/swagger/`.
 
 Os endpoints da API são:
 |Rotas| Método | Descrição |
@@ -129,6 +127,18 @@ Atualmente a aplicação usa um super usuário para logar, para criar um rode o 
 
 ```sh
 python manage.py createsuperuser
+```
+
+**Por fim rode a aplicação**
+
+```sh
+python manage.py runserver
+```
+
+Acesse no seguinte endereço
+
+```text
+http://localhost:8000/
 ```
 
 This software was created for study purposes only. Feel free to try it out.
